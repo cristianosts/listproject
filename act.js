@@ -5,6 +5,7 @@ const todoList = document.querySelector('#to-do-list')
 const editForm = document.querySelector('#edit-form')
 const editInput = document.querySelector('#edit-input')
 const cancelEditBtn = document.querySelector('#cancel-edit-btn')
+let oldInputValue 
 
 
 //funções
@@ -36,7 +37,25 @@ const saveToDo = (text) => {
     todoInput.focus()
 }
 
-//eventos
+const toggleForms = () => {
+    editForm.classList.toggle('hide')
+    todoForm.classList.toggle('hide')
+    todoList.classList.toggle('hide')
+}
+
+const updateTodo = (text) => {
+    const todos = document.querySelectorAll('.to-do')
+
+    todos.forEach((todo) => {
+        let todoTitle = todo.querySelector('h3')
+
+        if (todoTitle.innerText === oldInputValue) {
+            todoTitle.innerText = text
+        }
+    })
+}
+
+//eventos: criar tarefa
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault()
    
@@ -47,5 +66,47 @@ todoForm.addEventListener('submit', (e) => {
     }
 })
 
-//identificar diferentes cliques 
-continução dos próximos em breve hehehe
+//eventos: identificar diferentes cliques 
+document.addEventListener('click', (e) =>{
+    const targetEl = e.target
+    const parentEl = targetEl.closest('div')
+    let todoTitle
+
+    if(parentEl && parentEl.querySelector('h3')) {
+        todoTitle = parentEl.querySelector('h3').innerText
+    }
+
+    if(targetEl.classList.contains('finish-to-do')) {
+       parentEl.classList.toggle('done')
+    }
+
+    if(targetEl.classList.contains('remove-to-do')) {
+        parentEl.remove()
+    }
+
+    if(targetEl.classList.contains('edit-to-do')) {
+        toggleForms()
+   
+    editInput.value = todoTitle
+    oldInputValue = todoTitle
+
+    }
+})
+
+cancelEditBtn.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    toggleForms()
+})
+
+editForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const editInputValue = editInput.value
+
+    if(editInputValue) {
+       updateTodo(editInputValue)
+    }
+
+    toggleForms()
+})

@@ -53,7 +53,7 @@ input, select {
 
 /* to=do header */
 .to-do-container {
-    max-width: 450px;
+    max-width: 1000px;
     margin: 3rem auto;
     background-color: #fdfdfd;
     padding: 1.5rem;
@@ -67,6 +67,7 @@ input, select {
 }
 
 /* to-do form */
+
 #to-do-form, #edit-form {
     padding: 1rem;
     border-bottom: 1px solid #ccc;
@@ -78,10 +79,11 @@ input, select {
 }
 
 .form-control {
-    display: flex;
+   display: flex;
 }
 
 .form-control input {
+    flex: 0 1 525px;
     margin-right: .3rem;
 }
 
@@ -156,3 +158,4 @@ input, select {
     text-decoration: line-through;
     font-style: italic;
 }
+
